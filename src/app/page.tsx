@@ -15,28 +15,11 @@ import {
   ArrowRight,
 } from "lucide-react";
 
-const cringeOptions = [
-  { value: 1, label: "Mild", desc: "Lil corporate" },
-  { value: 2, label: "Spicy", desc: "Buzzword bro" },
-  { value: 3, label: "Unhinged", desc: "Thought leader" },
-  { value: 4, label: "Psycho", desc: "Final boss" },
-];
-
-const emojiOptions = [
-  { value: 0, label: "None", desc: "Pure text" },
-  { value: 1, label: "Subtle", desc: "1-2 max" },
-  { value: 2, label: "Normal", desc: "Standard" },
-  { value: 3, label: "Heavy", desc: "Rain" },
-  { value: 4, label: "Nuclear", desc: "Chaos" },
-];
-
 type Mode = "to-linkedin" | "to-human";
 
 export default function Home() {
   const [inputText, setInputText] = useState("");
   const [outputText, setOutputText] = useState("");
-  const [cringeLevel, setCringeLevel] = useState(3);
-  const [emojiLevel, setEmojiLevel] = useState(2);
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
   const [mode, setMode] = useState<Mode>("to-linkedin");
@@ -50,10 +33,7 @@ export default function Home() {
     try {
       const endpoint =
         mode === "to-linkedin" ? "/api/translate" : "/api/detranslate";
-      const body =
-        mode === "to-linkedin"
-          ? { text: inputText, cringeLevel, emojiLevel }
-          : { text: inputText };
+      const body = { text: inputText };
 
       const res = await fetch(endpoint, {
         method: "POST",
@@ -156,67 +136,6 @@ export default function Home() {
               className="min-h-[110px] text-[15px] resize-none border-0 bg-[#f8f8f8] rounded-lg p-4 placeholder:text-[#999] focus-visible:ring-1 focus-visible:ring-[#0a66c2]/30 font-[family-name:var(--font-sans)]"
             />
           </div>
-
-          {/* Cringe & Emoji options — only for to-linkedin mode */}
-          {mode === "to-linkedin" && (
-            <>
-              <div>
-                <span className="text-xs font-semibold text-[#666] uppercase tracking-wide mb-2 block">
-                  Cringe Level
-                </span>
-                <div className="grid grid-cols-4 gap-1.5">
-                  {cringeOptions.map((opt) => (
-                    <button
-                      key={opt.value}
-                      onClick={() => setCringeLevel(opt.value)}
-                      className={`py-2.5 px-2 rounded-lg text-center transition-all cursor-pointer ${
-                        cringeLevel === opt.value
-                          ? "bg-[#0a66c2] text-white shadow-sm"
-                          : "bg-[#f8f8f8] text-[#666] hover:bg-[#eee]"
-                      }`}
-                    >
-                      <div className="text-[13px] font-semibold leading-tight">
-                        {opt.label}
-                      </div>
-                      <div
-                        className={`text-[10px] mt-0.5 leading-tight ${cringeLevel === opt.value ? "text-white/70" : "text-[#999]"}`}
-                      >
-                        {opt.desc}
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <span className="text-xs font-semibold text-[#666] uppercase tracking-wide mb-2 block">
-                  Emoji Level
-                </span>
-                <div className="grid grid-cols-5 gap-1.5">
-                  {emojiOptions.map((opt) => (
-                    <button
-                      key={opt.value}
-                      onClick={() => setEmojiLevel(opt.value)}
-                      className={`py-2.5 px-1 rounded-lg text-center transition-all cursor-pointer ${
-                        emojiLevel === opt.value
-                          ? "bg-[#0a66c2] text-white shadow-sm"
-                          : "bg-[#f8f8f8] text-[#666] hover:bg-[#eee]"
-                      }`}
-                    >
-                      <div className="text-[13px] font-semibold leading-tight">
-                        {opt.label}
-                      </div>
-                      <div
-                        className={`text-[10px] mt-0.5 leading-tight ${emojiLevel === opt.value ? "text-white/70" : "text-[#999]"}`}
-                      >
-                        {opt.desc}
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </>
-          )}
 
           {/* Buttons */}
           <div className="flex gap-2">
