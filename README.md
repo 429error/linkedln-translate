@@ -20,3 +20,6 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 ## OR  
 👉 [Try here](https://linkedln-translate.vercel.app/)
+
+## DEMO
+[linkedln_t.webm](https://github.com/user-attachments/assets/e1fc1db0-7374-4670-928c-ae38e5bd3771)
